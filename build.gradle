@@ -6,6 +6,11 @@ plugins {
 group = 'fr.swansky'
 version = '1.0.0'
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 repositories {
     mavenCentral()
     maven {
