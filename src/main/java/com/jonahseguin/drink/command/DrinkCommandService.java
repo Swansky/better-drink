@@ -15,7 +15,6 @@ import com.jonahseguin.drink.parametric.ProviderAssigner;
 import com.jonahseguin.drink.parametric.binder.DrinkBinder;
 import com.jonahseguin.drink.provider.*;
 import com.jonahseguin.drink.provider.spigot.*;
-
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -66,6 +65,8 @@ public class DrinkCommandService implements CommandService {
     }
 
     private void bindDefaults() {
+        bind(Float.class).toProvider(FloatProvider.INSTANCE);
+        bind(float.class).toProvider(FloatProvider.INSTANCE);
         bind(Boolean.class).toProvider(BooleanProvider.INSTANCE);
         bind(boolean.class).toProvider(BooleanProvider.INSTANCE);
         bind(Double.class).toProvider(DoubleProvider.INSTANCE);

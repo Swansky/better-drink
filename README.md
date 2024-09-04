@@ -14,6 +14,15 @@ Better Drink introduces enhancements and maintains the original vision, the "bet
 superiority over the original Drink project. Instead, it signifies an effort to further evolve the library and address
 existing issues.
 
+## 🛠️ Roadmap
+
+- **Internationalization Support**:  
+  Add support for the Adventure component from Paper to handle internationalized (i18n) responses and command
+  descriptions.
+
+- **Comprehensive Testing**:  
+  Develop thorough tests to ensure the reliability and stability of better-drink.
+
 ## Installing
 
 You have a couple of options for installing better-drink:
@@ -50,7 +59,6 @@ To build and install from source:
 1. Clone this repository: `git clone git@github.com:swansky/better-drink.git`
 2. Enter the directory: `cd better-drink`
 3. Build & install with Gradle: `./gradlew clean build install`
-
 
 ## Using Drink
 

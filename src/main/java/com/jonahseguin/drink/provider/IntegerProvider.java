@@ -43,7 +43,6 @@ public class IntegerProvider extends DrinkProvider<Integer> {
             for (Annotation annotation : annotations) {
                 if (annotation instanceof Positive && (value <= 0)) {
                     throw new CommandExitMessage("Required: Positive Integer, Given: '" + s + "'");
-
                 }
             }
             return value;
