@@ -3,10 +3,12 @@ package com.jonahseguin.drink.provider;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,9 +16,14 @@ import java.util.Date;
 import java.util.List;
 
 public class DateProvider extends DrinkProvider<Date> {
-    public static final DrinkProvider<Date> INSTANCE = new DateProvider();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+    public static final DrinkProvider<Date> INSTANCE = new DateProvider(new SimpleDateFormat(DATE_FORMAT));
+
+    private final DateFormat dateFormat;
+
+    public DateProvider(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
 
     @Override
     public boolean doesConsumeArgument() {
@@ -35,7 +42,7 @@ public class DateProvider extends DrinkProvider<Date> {
         try {
             return dateFormat.parse(dateString);
         } catch (ParseException e) {
-            throw new CommandExitMessage("Le format de date n'est pas valide %s 03/05/2022".formatted(DATE_FORMAT));
+            throw new CommandExitMessage(Component.translatable("error.provider.date", DATE_FORMAT));
         }
     }
 

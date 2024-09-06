@@ -14,14 +14,22 @@ Better Drink introduces enhancements and maintains the original vision, the "bet
 superiority over the original Drink project. Instead, it signifies an effort to further evolve the library and address
 existing issues.
 
-## 🛠️ Roadmap
-
-- **Internationalization Support**:  
-  Add support for the Adventure component from Paper to handle internationalized (i18n) responses and command
-  descriptions.
+## 🛠️ Roadmap TODO
 
 - **Comprehensive Testing**:  
   Develop thorough tests to ensure the reliability and stability of better-drink.
+
+## 🌍 Supported Languages
+
+The library currently supports the following languages for error messages and interfaces:
+
+- **German**
+- **English (United States)**
+- **French**
+- **Chinese**
+
+💡 *Contributions for corrections or new language implementations are warmly welcomed!*
+
 
 ## Installing
 

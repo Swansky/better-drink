@@ -3,6 +3,7 @@ package com.jonahseguin.drink.provider;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,9 +40,8 @@ public class FloatProvider extends DrinkProvider<Float> {
         String s = arg.get();
         try {
             return Float.parseFloat(s);
-        }
-        catch (NumberFormatException ex) {
-            throw new CommandExitMessage("Required: Decimal Number, Given: '" + s + "'");
+        } catch (NumberFormatException ex) {
+            throw new CommandExitMessage(Component.translatable("error.provider.float", s));
         }
     }
 

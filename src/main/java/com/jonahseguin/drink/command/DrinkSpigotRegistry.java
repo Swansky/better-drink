@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +18,7 @@ public class DrinkSpigotRegistry {
         try {
             commandMap = (CommandMap) getPrivateField(Bukkit.getServer(), "commandMap", false);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            commandService.getPlugin().getSLF4JLogger().error("load spigot commandMap", e);
         }
     }
 

@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,7 +103,7 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
 
     private DrinkCommand calculateDefaultCommand() {
         for (DrinkCommand dc : commands.values()) {
-            if (dc.getName().length() == 0 || dc.getName().equals(DrinkCommandService.DEFAULT_KEY)) {
+            if (dc.getName().isEmpty() || dc.getName().equals(DrinkCommandService.DEFAULT_KEY)) {
                 // assume default!
                 return dc;
             }
@@ -155,22 +156,22 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
     }
 
     @Override
-    public boolean execute(CommandSender commandSender, String s, String[] strings) {
+    public boolean execute(@NotNull CommandSender commandSender, String s, String[] strings) {
         return executor.onCommand(commandSender, this, s, strings);
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
-        return tabCompleter.onTabComplete(sender, this, alias, args);
+    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
+        return Objects.requireNonNull(tabCompleter.onTabComplete(sender, this, alias, args));
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args, Location location) throws IllegalArgumentException {
-        return tabCompleter.onTabComplete(sender, this, alias, args);
+    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args, Location location) throws IllegalArgumentException {
+        return Objects.requireNonNull(tabCompleter.onTabComplete(sender, this, alias, args));
     }
 
     @Override
-    public Plugin getPlugin() {
+    public @NotNull Plugin getPlugin() {
         return commandService.getPlugin();
     }
 
@@ -183,7 +184,7 @@ public class DrinkCommandContainer extends Command implements PluginIdentifiable
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 

@@ -3,7 +3,7 @@ package com.jonahseguin.drink.provider.spigot;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -48,9 +48,11 @@ public class PlayerProvider extends DrinkProvider<Player> {
         String name = arg.get();
         Player p = plugin.getServer().getPlayer(name);
         if (p != null) {
+
+
             return p;
         }
-        throw new CommandExitMessage("No player online with name '" + name + "'.");
+        throw new CommandExitMessage(Component.translatable("error.provider.player_name.invalid", name));
     }
 
     @Override

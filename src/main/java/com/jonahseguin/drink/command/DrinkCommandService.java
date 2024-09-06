@@ -2,6 +2,7 @@ package com.jonahseguin.drink.command;
 
 import com.google.common.base.Preconditions;
 import com.jonahseguin.drink.CommandService;
+import com.jonahseguin.drink.TranslateUtils;
 import com.jonahseguin.drink.annotation.*;
 import com.jonahseguin.drink.argument.ArgumentParser;
 import com.jonahseguin.drink.argument.CommandArgs;
@@ -31,11 +32,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static com.jonahseguin.drink.Drink.ERROR_LABEL;
 
 public class DrinkCommandService implements CommandService {
 
     public static final String DEFAULT_KEY = "DRINK_DEFAULT";
+
 
     private final JavaPlugin plugin;
     private final CommandExtractor extractor;
@@ -80,7 +81,6 @@ public class DrinkCommandService implements CommandService {
         bind(String.class).annotatedWith(Text.class).toProvider(TextProvider.INSTANCE);
         bind(String.class).annotatedWith(EnumValues.class).toProvider(EnumValuesProvider.INSTANCE);
         bind(Date.class).toProvider(DateProvider.INSTANCE);
-        bind(Date.class).annotatedWith(Time.class).toProvider(TimeProvider.INSTANCE);
         bind(Date.class).annotatedWith(Duration.class).toProvider(DurationProvider.INSTANCE);
         bind(CommandArgs.class).toProvider(CommandArgsProvider.INSTANCE);
 
@@ -175,13 +175,13 @@ public class DrinkCommandService implements CommandService {
             try {
                 command.getMethod().invoke(command.getHandler(), parsedArguments);
             } catch (IllegalAccessException | InvocationTargetException ex) {
-                sender.sendMessage(ERROR_LABEL + "Impossible d'executer la commande. Merci de contacter un administrateur.");
+                sender.sendMessage(TranslateUtils.EXCEPTION_MESSAGE);
                 throw new DrinkException("Failed to execute command '" + command.getName() + "' with arguments '" + StringUtils.join(Arrays.asList(args), ' ') + " for sender " + sender.getName(), ex);
             }
         } catch (CommandExitMessage ex) {
             ex.print(sender);
         } catch (CommandArgumentException ex) {
-            sender.sendMessage(ERROR_LABEL + ex.getMessage());
+            sender.sendMessage(ex.getDisplayableMessage());
             helpService.sendUsageMessage(sender, getContainerFor(command), command);
         }
     }

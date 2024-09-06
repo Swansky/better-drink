@@ -3,6 +3,7 @@ package com.jonahseguin.drink.provider.spigot;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
@@ -38,7 +39,7 @@ public class OfflinePlayerProvider extends DrinkProvider<OfflinePlayer> {
         if (offlinePlayer.hasPlayedBefore()) {
             return offlinePlayer;
         }
-        throw new CommandExitMessage("Le nom de joueur entré n'est pas valide.");
+        throw new CommandExitMessage(Component.translatable("error.provider.player_name.invalid", arg.get()));
     }
 
     @Override

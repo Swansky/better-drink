@@ -3,6 +3,7 @@ package com.jonahseguin.drink.provider;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
@@ -29,7 +30,7 @@ public class UUIDProvider extends DrinkProvider<UUID> {
         try {
             return UUID.fromString(s);
         } catch (IllegalArgumentException ex) {
-            throw new CommandExitMessage("Required valid uuid, Given: '" + s + "'");
+            throw new CommandExitMessage(Component.translatable("error.provider.uuid", s));
         }
     }
 

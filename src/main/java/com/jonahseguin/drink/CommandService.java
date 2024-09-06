@@ -79,7 +79,7 @@ public interface CommandService {
      * Set the authorizer that Drink uses.
      * This will allow you to edit the behavior for checking if a {@link org.bukkit.command.CommandSender} or
      * {@link org.bukkit.entity.Player} has permission to run a command.
-     * You can also edit the no-permission message by modifying this, or use {@link DrinkAuthorizer#setNoPermissionMessage(String)}
+     * You can also edit the no-permission message by modifying this
      * @param authorizer {@link Nonnull} A {@link DrinkAuthorizer} instance to be used for
      *                                  checking authorization for command execution
      */

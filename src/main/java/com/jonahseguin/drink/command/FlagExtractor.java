@@ -2,9 +2,13 @@ package com.jonahseguin.drink.command;
 
 import com.google.common.base.Preconditions;
 import com.jonahseguin.drink.exception.CommandArgumentException;
+import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class FlagExtractor {
 
@@ -42,7 +46,7 @@ public class FlagExtractor {
                             currentFlag = null;
                         }
                     } else {
-                        throw new CommandArgumentException("The flag '-" + f + "' has already been provided in this command.");
+                        throw new CommandArgumentException("error.parameter.flag.already_provide", Component.text(f));
                     }
                     it.remove();
                 }

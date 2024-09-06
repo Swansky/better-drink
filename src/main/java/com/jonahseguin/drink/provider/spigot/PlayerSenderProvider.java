@@ -3,13 +3,12 @@ package com.jonahseguin.drink.provider.spigot;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
-import java.util.Collections;
 import java.util.List;
 
 public class PlayerSenderProvider extends DrinkProvider<Player> {
@@ -32,7 +31,7 @@ public class PlayerSenderProvider extends DrinkProvider<Player> {
         if (arg.isSenderPlayer()) {
             return arg.getSenderAsPlayer();
         }
-        throw new CommandExitMessage("This is a player-only command.");
+        throw new CommandExitMessage(Component.translatable("error.provider.player_only"));
     }
 
     @Override

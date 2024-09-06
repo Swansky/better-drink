@@ -3,6 +3,7 @@ package com.jonahseguin.drink.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class DrinkTabCompleter implements TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase(container.getName())) {
             Map.Entry<DrinkCommand, String[]> data = container.getCommand(args);
             if (data != null && data.getKey() != null) {
@@ -35,24 +36,22 @@ public class DrinkTabCompleter implements TabCompleter {
                     List<String> s = drinkCommand.getConsumingProviders()[tabCompletingIndex].getSuggestions(sender, tabCompleting);
                     if (s != null) {
                         List<String> suggestions = new ArrayList<>(s);
-                        // if (args.length == 0 || args.length == 1) {
+
                         StringBuilder tC = new StringBuilder();
                         for (String arg : args) {
                             tC.append(arg).append(" ");
                         }
                         tC.deleteCharAt(tC.length() - 1);
                         suggestions.addAll(container.getCommandSuggestions(sender, tC.toString()));
-                        //}
+
                         return suggestions;
                     } else {
-                        //if (args.length == 0 || args.length == 1) {
                         StringBuilder tC = new StringBuilder();
                         for (String arg : args) {
                             tC.append(arg).append(" ");
                         }
                         tC.deleteCharAt(tC.length() - 1);
                         return container.getCommandSuggestions(sender, tC.toString());
-                        //}
                     }
                 } else {
                     StringJoiner joiner = new StringJoiner(" ");
@@ -62,14 +61,12 @@ public class DrinkTabCompleter implements TabCompleter {
                     return container.getCommandSuggestions(sender, joiner.toString());
                 }
             } else {
-                //if (args.length == 0 || args.length == 1) {
                 StringJoiner joiner = new StringJoiner(" ");
                 for (String arg : args) {
                     joiner.add(arg);
                 }
 
                 return container.getCommandSuggestions(sender, joiner.toString());
-                // }
             }
         }
         return Collections.emptyList();

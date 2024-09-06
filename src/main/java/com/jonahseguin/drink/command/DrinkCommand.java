@@ -46,13 +46,13 @@ public class DrinkCommand {
         this.requiresAsync = calculateRequiresAsync();
         this.generatedUsage = generateUsage();
         this.allAliases = aliases;
-        if (name.length() > 0 && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
+        if (!name.isEmpty() && !name.equals(DrinkCommandService.DEFAULT_KEY)) {
             allAliases.add(name);
         }
     }
 
     public String getMostApplicableUsage() {
-        if (usage.length() > 0) {
+        if (!usage.isEmpty()) {
             return usage;
         }
         else {
@@ -139,7 +139,7 @@ public class DrinkCommand {
         for (int i = 0; i < parameters.getParameters().length; i++) {
             CommandParameter parameter = parameters.getParameters()[i];
             if (!parameter.isFlag() && !parameter.isOptional()) {
-                DrinkProvider provider = providers[i];
+                DrinkProvider<?> provider = providers[i];
                 if (provider.doesConsumeArgument()) {
                     count++;
                 }

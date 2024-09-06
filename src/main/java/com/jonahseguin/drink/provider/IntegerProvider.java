@@ -4,6 +4,8 @@ import com.jonahseguin.drink.annotation.Positive;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
@@ -42,12 +44,12 @@ public class IntegerProvider extends DrinkProvider<Integer> {
             int value = Integer.parseInt(s);
             for (Annotation annotation : annotations) {
                 if (annotation instanceof Positive && (value <= 0)) {
-                    throw new CommandExitMessage("Required: Positive Integer, Given: '" + s + "'");
+                    throw new CommandExitMessage(Component.translatable("error.provider.integer.positive", s));
                 }
             }
             return value;
         } catch (NumberFormatException ex) {
-            throw new CommandExitMessage("Required: Integer, Given: '" + s + "'");
+            throw new CommandExitMessage(Component.translatable("error.provider.integer", s));
         }
     }
 

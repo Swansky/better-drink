@@ -1,17 +1,20 @@
 package com.jonahseguin.drink.exception;
 
-import org.bukkit.ChatColor;
+import com.jonahseguin.drink.TranslateUtils;
+import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.command.CommandSender;
 
-import static com.jonahseguin.drink.Drink.ERROR_LABEL;
 
 public class CommandExitMessage extends Exception {
 
-    public CommandExitMessage(String message) {
-        super(message);
+
+    private final TranslatableComponent displayableMessage;
+
+    public CommandExitMessage(TranslatableComponent message) {
+        this.displayableMessage = message;
     }
 
     public void print(CommandSender sender) {
-        sender.sendMessage(ERROR_LABEL + getMessage());
+        sender.sendMessage(TranslateUtils.makeErrorMessage(displayableMessage));
     }
 }

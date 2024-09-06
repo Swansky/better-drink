@@ -4,6 +4,7 @@ import com.jonahseguin.drink.annotation.EnumValues;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,14 +31,18 @@ public class EnumValuesProvider extends DrinkProvider<String> {
     @Override
     public String provide(@NotNull CommandArg arg, @NotNull List<? extends Annotation> annotations) throws CommandExitMessage {
         String value = arg.get();
-        EnumValues annotation = (EnumValues) annotations.get(0);
+        if (annotations.isEmpty()) {
+            throw new CommandExitMessage(Component.translatable("error.provider.enum_value.exception"));
+        }
+        EnumValues annotation = (EnumValues) annotations.getFirst();
         String[] values = annotation.value();
         for (String s : values) {
             if (s.equalsIgnoreCase(value)) {
                 return s;
             }
         }
-        throw new CommandExitMessage("Invalid value. Valid values: " + String.join(", ", values));
+
+        throw new CommandExitMessage(Component.translatable("error.provider.enum_value.wrong", String.join(", ", values)));
     }
 
     @Override
@@ -47,7 +52,10 @@ public class EnumValuesProvider extends DrinkProvider<String> {
 
     @Override
     public List<String> getSuggestions(CommandSender sender, @NotNull String prefix, @NotNull List<? extends Annotation> annotations) {
-        EnumValues annotation = (EnumValues) annotations.get(0);
+        if (annotations.isEmpty()) {
+            return List.of();
+        }
+        EnumValues annotation = (EnumValues) annotations.getFirst();
         String[] values = annotation.value();
         List<String> suggestions = new ArrayList<>();
         for (String value : values) {

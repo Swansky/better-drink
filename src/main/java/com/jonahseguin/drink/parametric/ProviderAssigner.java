@@ -26,7 +26,7 @@ public class ProviderAssigner {
                 DrinkProvider<?> provider = null;
                 for (DrinkBinding<?> binding : bindings.getBindings()) {
                     if (binding.canProvideFor(param)) {
-                        provider = binding.getProvider();
+                        provider = binding.provider();
                         break;
                     }
                 }

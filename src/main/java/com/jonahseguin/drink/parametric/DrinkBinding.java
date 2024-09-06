@@ -7,17 +7,7 @@ import java.lang.annotation.Annotation;
 import java.util.Set;
 
 
-public class DrinkBinding<T> {
-
-    private final Class<T> type;
-    private final Set<Class<? extends Annotation>> annotations;
-    private final DrinkProvider<T> provider;
-
-    public DrinkBinding(Class<T> type, Set<Class<? extends Annotation>> annotations, DrinkProvider<T> provider) {
-        this.type = type;
-        this.annotations = annotations;
-        this.provider = provider;
-    }
+public record DrinkBinding<T>(Class<T> type, Set<Class<? extends Annotation>> annotations, DrinkProvider<T> provider) {
 
     public boolean canProvideFor(@Nonnull CommandParameter parameter) {
         Preconditions.checkNotNull(parameter, "Parameter cannot be null");
@@ -33,17 +23,5 @@ public class DrinkBinding<T> {
             }
         }
         return true;
-    }
-
-    public Class<T> getType() {
-        return type;
-    }
-
-    public Set<Class<? extends Annotation>> getAnnotations() {
-        return annotations;
-    }
-
-    public DrinkProvider<T> getProvider() {
-        return provider;
     }
 }

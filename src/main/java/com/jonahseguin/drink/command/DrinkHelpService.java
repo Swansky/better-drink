@@ -1,12 +1,12 @@
 package com.jonahseguin.drink.command;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
+import com.jonahseguin.drink.TranslateUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.CommandSender;
-
-import static com.jonahseguin.drink.Drink.ERROR_LABEL;
 
 
 public class DrinkHelpService {
@@ -17,18 +17,23 @@ public class DrinkHelpService {
     public DrinkHelpService(DrinkCommandService commandService) {
         this.commandService = commandService;
         this.helpFormatter = (sender, container) -> {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m--------------------------------"));
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bHelp &7- &6/" + container.getName()));
+            net.kyori.adventure.text.TextComponent.Builder helpMessageBuilder = Component.text();
+            LegacyComponentSerializer componentSerializer = LegacyComponentSerializer.legacy('&');
+
+            helpMessageBuilder.append(componentSerializer.deserialize("&7&m--------------------------------"));
+            helpMessageBuilder.append(componentSerializer.deserialize("&bHelp &7- &6/" + container.getName()));
+            helpMessageBuilder.append(componentSerializer.deserialize(""));
+            helpMessageBuilder.append(componentSerializer.deserialize(""));
             for (DrinkCommand c : container.getCommands().values()) {
                 if (sender.hasPermission(c.getPermission()) || sender.isOp()) {
-                    TextComponent msg = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&',
-                            "&7/" + container.getName() + (c.getName().length() > 0 ? " &e" + c.getName() : "") + " &7" + c.getMostApplicableUsage() + " &7- &f" + c.getShortDescription()));
-                    msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(ChatColor.GRAY + "/" + container.getName() + " " + c.getName() + " - " + ChatColor.WHITE + c.getDescription())));
-                    msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + container.getName() + " " + c.getName()));
-                    sender.spigot().sendMessage(msg);
+                    TextComponent msg = componentSerializer.deserialize("&7/" + container.getName() + (!c.getName().isEmpty() ? " &e" + c.getName() : "") + " &7" + c.getMostApplicableUsage() + " &7- &f" + c.getShortDescription());
+                    msg = msg.hoverEvent(HoverEvent.showText(componentSerializer.deserialize("&7/" + container.getName() + " " + c.getName() + " - &f" + c.getDescription())));
+                    msg = msg.clickEvent(ClickEvent.suggestCommand("/" + container.getName() + " " + c.getName()));
+                    helpMessageBuilder.append(msg.append(Component.newline()));
                 }
             }
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m--------------------------------"));
+            helpMessageBuilder.append(componentSerializer.deserialize("&7&m--------------------------------"));
+            sender.sendMessage(helpMessageBuilder.build());
         };
     }
 
@@ -41,15 +46,16 @@ public class DrinkHelpService {
         sender.sendMessage(getUsageMessage(container, command));
     }
 
-    public String getUsageMessage(DrinkCommandContainer container, DrinkCommand command) {
-        String usage = ERROR_LABEL + "Utilisation de la commande: /" + container.getName() + " ";
-        if (command.getName().length() > 0) {
-            usage += command.getName() + " ";
+    public Component getUsageMessage(DrinkCommandContainer container, DrinkCommand command) {
+        Component usage = TranslateUtils.makeErrorMessage("error.command.usage", Component.text(container.getName()));
+
+        if (!command.getName().isEmpty()) {
+            usage = usage.append(Component.text(command.getName() + " "));
         }
-        if (command.getUsage() != null && command.getUsage().length() > 0) {
-            usage += command.getUsage();
+        if (command.getUsage() != null && !command.getUsage().isEmpty()) {
+            usage = usage.append(Component.text(command.getUsage()));
         } else {
-            usage += command.getGeneratedUsage();
+            usage = usage.append(Component.text(command.getGeneratedUsage()));
         }
         return usage;
     }

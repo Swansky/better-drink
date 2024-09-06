@@ -3,6 +3,7 @@ package com.jonahseguin.drink.provider.spigot;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.ConsoleCommandSender;
 
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ public class ConsoleCommandSenderProvider extends DrinkProvider<ConsoleCommandSe
     @Override
     public ConsoleCommandSender provide(@Nonnull CommandArg arg, @Nonnull List<? extends Annotation> annotations) throws CommandExitMessage {
         if (arg.isSenderPlayer()) {
-            throw new CommandExitMessage("This is a console-only command.");
+            throw new CommandExitMessage(Component.translatable("error.provider.console_only"));
         }
 
         return null;

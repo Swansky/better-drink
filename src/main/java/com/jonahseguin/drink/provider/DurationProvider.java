@@ -3,16 +3,16 @@ package com.jonahseguin.drink.provider;
 import com.jonahseguin.drink.argument.CommandArg;
 import com.jonahseguin.drink.exception.CommandExitMessage;
 import com.jonahseguin.drink.parametric.DrinkProvider;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class DurationProvider extends DrinkProvider<Date> {
+    private static final String FORMAT = "hh:mm:ss";
 
     public static final DurationProvider INSTANCE = new DurationProvider();
 
@@ -35,10 +35,10 @@ public class DurationProvider extends DrinkProvider<Date> {
             if (l != -1) {
                 return new Date(l);
             } else {
-                throw new CommandExitMessage("Duration must be in format hh:mm or hh:mm:ss or 1h2m3s");
+                throw new CommandExitMessage(Component.translatable("error.provider.duration", FORMAT));
             }
         } catch (Exception ex) {
-            throw new CommandExitMessage("Duration must be in format hh:mm or hh:mm:ss or 1h2m3s");
+            throw new CommandExitMessage(Component.translatable("error.provider.duration", FORMAT));
         }
     }
 

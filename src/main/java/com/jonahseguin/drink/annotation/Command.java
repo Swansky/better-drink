@@ -13,6 +13,7 @@ public @interface Command {
 
     String[] aliases() default {};
 
+    //support translation key
     String desc();
 
     String usage() default "";

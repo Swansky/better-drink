@@ -21,8 +21,6 @@ public class Drink {
 
     }
 
-    public static final String ERROR_LABEL = "[§cError§r] - ";
-
     private static final ConcurrentMap<String, CommandService> services = new ConcurrentHashMap<>();
 
     /**
@@ -34,6 +32,7 @@ public class Drink {
      */
     public static CommandService get(@Nonnull JavaPlugin javaPlugin) {
         Preconditions.checkNotNull(javaPlugin, "JavaPlugin cannot be null");
+        TranslateUtils.registerTranslationKeys();
         return services.computeIfAbsent(javaPlugin.getName(), name -> new DrinkCommandService(javaPlugin));
     }
 
