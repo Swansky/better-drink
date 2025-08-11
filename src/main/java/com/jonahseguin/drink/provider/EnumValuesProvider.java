@@ -34,7 +34,7 @@ public class EnumValuesProvider extends DrinkProvider<String> {
         if (annotations.isEmpty()) {
             throw new CommandExitMessage(Component.translatable("error.provider.enum_value.exception"));
         }
-        EnumValues annotation = (EnumValues) annotations.getFirst();
+        EnumValues annotation = (EnumValues) annotations.get(0);
         String[] values = annotation.value();
         for (String s : values) {
             if (s.equalsIgnoreCase(value)) {
@@ -55,7 +55,7 @@ public class EnumValuesProvider extends DrinkProvider<String> {
         if (annotations.isEmpty()) {
             return List.of();
         }
-        EnumValues annotation = (EnumValues) annotations.getFirst();
+        EnumValues annotation = (EnumValues) annotations.get(0);
         String[] values = annotation.value();
         List<String> suggestions = new ArrayList<>();
         for (String value : values) {
