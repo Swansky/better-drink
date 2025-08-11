@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew test
 
       - name: Publish artifact to GitHub Packages
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-17'
         run: ./gradlew publish
         env:
           PUB_GITHUB_TOKEN: ${{ secrets.PUB_GITHUB_TOKEN }}
